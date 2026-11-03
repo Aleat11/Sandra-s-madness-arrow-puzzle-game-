@@ -1,0 +1,6 @@
+{
+  "name": "Sandra's Madness: Naty & Ally",
+  "description": "A cozy crochet and hamburger themed tap-away arrow puzzle game featuring Sandra, Naty, and Ally.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

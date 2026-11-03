@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Sandra\'s Madness: Naty &amp; Ally</string>
+    <string name="app_full_title">Sandra\'s Madness</string>
+    <string name="app_subtitle">featuring Naty &amp; Ally</string>
+    <string name="tagline_crochet_burger">Crochet &amp; Hamburger Arrow Puzzle</string>
+    <string name="nav_play">Play</string>
+    <string name="nav_levels">Chapters</string>
+    <string name="nav_kitchen">Burger Yarn</string>
+    <string name="nav_crew">Sandra, Naty &amp; Ally</string>
+    <string name="action_hint">Naty\'s Hint</string>
+    <string name="action_heal">Stitch Heart</string>
+    <string name="action_restart">Reset Board</string>
+    <string name="action_guide">Ray Guide</string>
+    <string name="level_cleared_title">Burger Stitched!</string>
+    <string name="out_of_hearts_title">Yarn Tangled!</string>
+    <string name="next_level">Next Puzzle</string>
+    <string name="try_again">Try Again</string>
+    <string name="daily_challenge">Ally\'s Daily Burger Challenge</string>
+    <string name="infinite_madness">Sandra\'s Endless Madness</string>
+</resources>
