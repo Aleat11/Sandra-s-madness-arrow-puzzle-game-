@@ -190,7 +190,7 @@ fun PuzzlePlayScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Campaign,
-                                    contentDescription = "Sandra: Bring Home The Jerky!",
+                                    contentDescription = "Sandra: Momma's Bringin' Home The Jerky!",
                                     tint = Color(0xFFE53935)
                                 )
                             }
@@ -607,7 +607,7 @@ fun PuzzlePlayScreen(
                 onActivatePowerUp = onActivatePowerUp
             )
 
-            // 7. Tactical Helper Row (Bring Home The Jerky!, 1 Tactical Hint, 1 Emergency Stitch, Reset)
+            // 7. Tactical Helper Row (Momma's Jerky!, 1 Tactical Hint, 1 Emergency Stitch, Reset)
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
@@ -620,12 +620,12 @@ fun PuzzlePlayScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Campaign,
-                        contentDescription = "Bring Home The Jerky",
+                        contentDescription = "Momma's Bringin' Home The Jerky",
                         tint = Color(0xFFE53935),
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Bring Home The Jerky! 🥩")
+                    Text("Momma's Bringin' Home The Jerky! 🥩")
                 }
 
                 FilledTonalButton(
@@ -813,7 +813,7 @@ private fun LevelWonOverlayCard(
                 }
             }
             Text(
-                text = if (bossDefeated != null) "Boss Defeated: $bossDefeated!" else "BRING HOME THE JERKY!! 🥩",
+                text = if (bossDefeated != null) "Boss Defeated: $bossDefeated!" else "MOMMA'S BRINGIN' HOME THE JERKY!! 🥩",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center
             )
