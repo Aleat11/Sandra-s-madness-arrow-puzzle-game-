@@ -43,19 +43,24 @@ import { BossArenaCard } from "@/components/BossArenaCard";
 type ActiveTab = "PLAY" | "CHAPTERS" | "KITCHEN" | "CREW";
 
 const ARCHER_QUIPS = [
-  "Bullseye! That arrow found its lane before the joke found its target.",
-  "Straight and narrow, just like an arrow's preferred commute.",
-  "One less arrow on the board. The quiver is looking less crowded already.",
-  "Nice shot! You really know how to point yourself in the right direction.",
-  "That launch was on point. The target never saw it coming.",
-  "Arrow you ready for the next one? Because the board certainly isn't."
+  "🎯 Bullseye! That arrow found its lane before the joke found its target.",
+  "🏹 Straight and narrow, just like an arrow's preferred commute.",
+  "🎯 Nice shot! You really know how to point yourself in the right direction.",
+  "🏹 Quiver me timbers! That board is clearing out fast.",
+  "🎯 That release was right on point. No feathers ruffled!",
+  "🏹 Arrow you ready for the next one? Because that lane was wide open.",
+  "🎯 Sharp reflexes! Robin Hood would be taking notes right now.",
+  "🏹 One less arrow to worry about. Momma's quiver is almost empty!",
+  "🎯 Point taken! That launch was pure archery perfection.",
+  "🏹 Straight shooter! You're really stringing together some nice moves."
 ];
 
 const BLOCKED_ARCHER_QUIPS = [
-  "That shot hit traffic. Clear the lane before you let it fly!",
-  "The arrow's got places to be, but something's in its way.",
-  "No bullseye yet. Give that arrow a clear runway first.",
-  "A blocked shot! Even arrows need right of way."
+  "🛑 That shot hit traffic! Clear the runway before you let it fly.",
+  "🚫 Even Robin Hood needs a clear lane. Trace the exit path first!",
+  "🛑 Arrow blocked! Don't worry, even Cupid misses on the first try.",
+  "🚫 That arrow wanted to fly, but another point was standing in its way.",
+  "🛑 Lane jammed! Look for an arrow pointing toward the open border."
 ];
 
 export default function SandrasMadnessWebApp() {
@@ -382,10 +387,11 @@ export default function SandrasMadnessWebApp() {
     setPowerUpCounts(updatedPowerUps);
     setIsLevelWon(isNowWon);
     setActiveSpeaker(isNowWon ? "SANDRA" : newCombo >= 4 ? "ALLY" : "NATY");
+    const archerJoke = ARCHER_QUIPS[movesMade % ARCHER_QUIPS.length];
     setCompanionMessage(
       isNowWon
-        ? `⭐ MOMMA'S BRINGIN' HOME THE JERKY!! Cleared with ${stars}/3 Stars!`
-        : `${hilarious.comicText} ${newCombo}x Combo! ${updatedRemaining.length} arrows left.`
+        ? `⭐ MOMMA'S BRINGIN' HOME THE JERKY!! Cleared with ${stars}/3 Stars! Bullseye!`
+        : `${hilarious.comicText} (${newCombo}x Combo) ${archerJoke}`
     );
   };
 
@@ -494,9 +500,9 @@ export default function SandrasMadnessWebApp() {
 
   return (
     <div className={isDarkTheme ? "dark" : ""}>
-      <div className="app-shell min-h-screen flex flex-col items-center px-3 py-4 max-w-7xl mx-auto gap-3">
+      <div className="app-shell min-h-screen flex flex-col items-center px-2 sm:px-4 py-2 sm:py-3 max-w-6xl mx-auto gap-2">
         {/* Top Header Card */}
-        <header className="app-header w-full rounded-3xl bg-amber-100/80 dark:bg-stone-900 border border-amber-300/80 dark:border-stone-700 p-3.5 shadow-sm">
+        <header className="app-header w-full rounded-2xl bg-amber-100/90 dark:bg-stone-900 border border-amber-300/80 dark:border-stone-700 px-3 py-2 shadow-sm">
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-3">
               <img
@@ -610,7 +616,7 @@ export default function SandrasMadnessWebApp() {
             )}
 
             {/* Level Info & Hearts Bar */}
-            <div className="powerup-panel w-full rounded-2xl bg-white dark:bg-stone-900 border border-amber-200 dark:border-stone-700 p-3 shadow-sm">
+            <div className="powerup-panel w-full rounded-xl bg-white/95 dark:bg-stone-900/95 border border-amber-200 dark:border-stone-700 px-3 py-2 shadow-sm">
               <div className="flex items-center justify-between">
                 <button
                   disabled={levelConfig.levelNumber <= 1 || levelConfig.levelNumber > TOTAL_STORY_LEVELS}
@@ -671,7 +677,7 @@ export default function SandrasMadnessWebApp() {
             </div>
 
             {/* Companion Message Strip */}
-            <div className="companion-strip w-full rounded-2xl bg-amber-50/90 dark:bg-stone-900 border border-amber-200 dark:border-stone-700 px-3.5 py-2.5 flex items-center justify-between gap-3">
+            <div className="companion-strip w-full rounded-xl bg-amber-50/95 dark:bg-stone-900/95 border border-amber-200/80 dark:border-stone-700 px-3 py-1.5 flex items-center justify-between gap-2">
               <div className="text-xs">
                 <span className="font-extrabold" style={{ color: CREW_MEMBERS[activeSpeaker].badgeColor }}>
                   {CREW_MEMBERS[activeSpeaker].displayName}:{" "}
@@ -781,7 +787,7 @@ export default function SandrasMadnessWebApp() {
             </div>
 
             {/* Scarce Earned Power-Ups Bar */}
-            <div className="w-full rounded-2xl bg-white dark:bg-stone-900 border border-amber-200 dark:border-stone-700 p-3 shadow-sm">
+            <div className="w-full rounded-xl bg-white/95 dark:bg-stone-900/95 border border-amber-200 dark:border-stone-700 px-3 py-2 shadow-sm">
               <p className="text-[11px] font-bold opacity-70 mb-2">
                 Earned Power-Up Stash (Earn +1 charge for 3⭐ Flawless Clears or 8x Combos!)
               </p>

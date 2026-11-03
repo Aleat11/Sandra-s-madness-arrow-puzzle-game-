@@ -81,7 +81,7 @@ export const ArrowBoardCanvas: React.FC<ArrowBoardCanvasProps> = ({
       ctx.fill();
       ctx.stroke();
 
-      const pad = 34;
+      const pad = 16;
       const boardW = width - pad * 2;
       const boardH = height - pad * 2;
       const cellSize = Math.min(boardW / gridCols, boardH / gridRows);
@@ -368,7 +368,7 @@ export const ArrowBoardCanvas: React.FC<ArrowBoardCanvasProps> = ({
     const clickX = ((e.clientX - rect.left) / rect.width) * canvas.width;
     const clickY = ((e.clientY - rect.top) / rect.height) * canvas.height;
 
-    const pad = 34;
+    const pad = 16;
     const boardW = canvas.width - pad * 2;
     const boardH = canvas.height - pad * 2;
     const cellSize = Math.min(boardW / gridCols, boardH / gridRows);
