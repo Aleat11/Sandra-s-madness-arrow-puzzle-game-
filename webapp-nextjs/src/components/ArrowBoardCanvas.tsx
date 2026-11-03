@@ -385,10 +385,10 @@ export const ArrowBoardCanvas: React.FC<ArrowBoardCanvasProps> = ({
   return (
     <canvas
       ref={canvasRef}
-      width={620}
-      height={620}
+      width={800}
+      height={800}
       onClick={handleCanvasClick}
-      className="w-full max-w-[540px] aspect-square cursor-pointer select-none rounded-3xl shadow-lg"
+      className="game-board-canvas w-full max-w-[min(94vw,780px)] aspect-square cursor-pointer select-none rounded-[2rem] shadow-2xl"
     />
   );
 };

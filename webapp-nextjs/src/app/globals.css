@@ -2,13 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: light;
+  --ink: #38251d;
+  --paper: #fffaf0;
+  --terracotta: #a7442e;
+  --honey: #d79a31;
+  --line: rgba(132, 82, 48, 0.16);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
-  background: radial-gradient(circle at top, #fffdf9, #fde68a 145%);
-  color: #2d1b14;
+  background:
+    radial-gradient(ellipse at 6% 2%, rgba(255,255,255,.96), transparent 38rem),
+    radial-gradient(ellipse at 95% 20%, rgba(245, 190, 93, .22), transparent 30rem),
+    linear-gradient(145deg, #fff9ed 0%, #f5e6c6 56%, #ead7b2 100%);
+  color: var(--ink);
   min-height: 100vh;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .dark body {
-  background: radial-gradient(circle at top, #1f1713, #110c0a 120%);
+  background: radial-gradient(ellipse at top, #38251d 0%, #1b1512 70%);
   color: #fffbeb;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+button:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(77, 45, 26, .12); }
+button:not(:disabled):active { transform: translateY(0) scale(.98); }
+button:focus-visible { outline: 3px solid rgba(215, 154, 49, .7); outline-offset: 3px; }
+
+.app-shell { width: min(100%, 1440px); }
+.app-header { backdrop-filter: blur(14px); box-shadow: 0 12px 35px rgba(88, 55, 29, .08); }
+.app-header button, .powerup-panel button, nav button { border-radius: 999px; }
+.game-main { min-width: 0; }
+.game-board-wrap { padding: 0 0 4px; }
+.game-board-canvas { touch-action: manipulation; border: 1px solid rgba(130, 83, 45, .18); }
+.companion-strip { box-shadow: 0 5px 18px rgba(89, 57, 29, .05); }
+
+@media (max-width: 640px) {
+  .app-shell { padding-inline: 8px; padding-top: 8px; padding-bottom: 10px; gap: 8px; }
+  .app-header { border-radius: 22px; padding: 10px; }
+  .app-header img { width: 40px; height: 40px; }
+  .app-header h1 { font-size: 1.05rem; }
+  .app-header > div:first-child { align-items: center; }
+  .app-header > div:first-child > div:first-child { gap: 8px; }
+  .app-header > div:first-child > div:last-child { gap: 5px; }
+  .app-header button { padding: 6px 9px; font-size: 10px; }
+  .game-main { gap: 8px; }
+  .game-board-canvas { max-width: min(96vw, 780px); border-radius: 22px; }
+  .companion-strip { padding: 8px 10px; font-size: 11px; }
+  .powerup-panel { padding: 9px; }
+  nav { bottom: 5px !important; }
+  nav button { padding: 8px 7px !important; font-size: 10px !important; }
+}
+
+@media (max-height: 740px) and (min-width: 641px) {
+  .app-shell { padding-top: 8px; padding-bottom: 8px; gap: 8px; }
+  .game-board-canvas { max-width: min(70vw, 72vh, 780px); }
+  .companion-strip { padding-top: 6px; padding-bottom: 6px; }
 }

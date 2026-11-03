@@ -42,6 +42,22 @@ import { BossArenaCard } from "@/components/BossArenaCard";
 
 type ActiveTab = "PLAY" | "CHAPTERS" | "KITCHEN" | "CREW";
 
+const ARCHER_QUIPS = [
+  "Bullseye! That arrow found its lane before the joke found its target.",
+  "Straight and narrow, just like an arrow's preferred commute.",
+  "One less arrow on the board. The quiver is looking less crowded already.",
+  "Nice shot! You really know how to point yourself in the right direction.",
+  "That launch was on point. The target never saw it coming.",
+  "Arrow you ready for the next one? Because the board certainly isn't."
+];
+
+const BLOCKED_ARCHER_QUIPS = [
+  "That shot hit traffic. Clear the lane before you let it fly!",
+  "The arrow's got places to be, but something's in its way.",
+  "No bullseye yet. Give that arrow a clear runway first.",
+  "A blocked shot! Even arrows need right of way."
+];
+
 export default function SandrasMadnessWebApp() {
   const [activeTab, setActiveTab] = useState<ActiveTab>("PLAY");
 
@@ -368,7 +384,7 @@ export default function SandrasMadnessWebApp() {
     setActiveSpeaker(isNowWon ? "SANDRA" : newCombo >= 4 ? "ALLY" : "NATY");
     setCompanionMessage(
       isNowWon
-        ? `⭐ BRING HOME THE JERKY!! Cleared with ${stars}/3 Stars!`
+        ? `⭐ MOMMA'S BRINGIN' HOME THE JERKY!! Cleared with ${stars}/3 Stars!`
         : `${hilarious.comicText} ${newCombo}x Combo! ${updatedRemaining.length} arrows left.`
     );
   };
@@ -406,7 +422,7 @@ export default function SandrasMadnessWebApp() {
     setCompanionMessage(
       lost
         ? "Ally: Out of Crochet Hearts! Restart the board for a 3-Star run, or use your 1 Emergency Stitch!"
-        : `Naty: Blocked at row ${blocker.row + 1}, col ${blocker.col + 1}! Trace the exit lane first (${nextHearts} Heart${nextHearts === 1 ? "" : "s"} left).`
+        : `Naty: Blocked at row ${blocker.row + 1}, col ${blocker.col + 1}! ${BLOCKED_ARCHER_QUIPS[movesMade % BLOCKED_ARCHER_QUIPS.length]} (${nextHearts} Heart${nextHearts === 1 ? "" : "s"} left).`
     );
   };
 
@@ -478,9 +494,9 @@ export default function SandrasMadnessWebApp() {
 
   return (
     <div className={isDarkTheme ? "dark" : ""}>
-      <div className="min-h-screen flex flex-col items-center px-3 py-4 max-w-2xl mx-auto gap-3">
+      <div className="app-shell min-h-screen flex flex-col items-center px-3 py-4 max-w-7xl mx-auto gap-3">
         {/* Top Header Card */}
-        <header className="w-full rounded-3xl bg-amber-100/80 dark:bg-stone-900 border-2 border-amber-300 dark:border-stone-700 p-3.5 shadow-sm">
+        <header className="app-header w-full rounded-3xl bg-amber-100/80 dark:bg-stone-900 border border-amber-300/80 dark:border-stone-700 p-3.5 shadow-sm">
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-3">
               <img
@@ -489,7 +505,7 @@ export default function SandrasMadnessWebApp() {
                 className="w-12 h-12 rounded-full object-cover border-2 border-sandra-terracotta shadow"
               />
               <div>
-                <h1 className="text-xl font-extrabold text-sandra-terracotta leading-tight">
+                <h1 className="text-2xl font-extrabold text-sandra-terracotta leading-tight tracking-tight">
                   Sandra&apos;s Madness: Naty &amp; Ally
                 </h1>
                 <p className="text-xs font-semibold text-amber-900 dark:text-amber-200">
@@ -504,11 +520,11 @@ export default function SandrasMadnessWebApp() {
                   const s = soundController.speakBringHomeTheJerky();
                   setLastHilariousSound(s);
                   setActiveSpeaker("SANDRA");
-                  setCompanionMessage("Sandra shouts: 'BRING HOME THE JERKY!!' 🥩🔥");
+                  setCompanionMessage("Sandra shouts: 'MOMMA'S BRINGIN' HOME THE JERKY!!' 🥩🔥");
                 }}
                 className="px-3 py-1.5 rounded-full bg-red-600 text-white text-xs font-bold shadow hover:bg-red-700"
               >
-                🥩 Jerky!
+                🥩 Momma's Jerky!
               </button>
               <button
                 onClick={() => {
@@ -581,7 +597,7 @@ export default function SandrasMadnessWebApp() {
 
         {/* Main View Switcher */}
         {activeTab === "PLAY" && (
-          <main className="w-full flex flex-col gap-3 items-center">
+          <main className="game-main w-full flex flex-col gap-2.5 items-center">
             {levelConfig.bossType && (
               <BossArenaCard
                 bossType={levelConfig.bossType}
@@ -594,7 +610,7 @@ export default function SandrasMadnessWebApp() {
             )}
 
             {/* Level Info & Hearts Bar */}
-            <div className="w-full rounded-2xl bg-white dark:bg-stone-900 border border-amber-200 dark:border-stone-700 p-3 shadow-sm">
+            <div className="powerup-panel w-full rounded-2xl bg-white dark:bg-stone-900 border border-amber-200 dark:border-stone-700 p-3 shadow-sm">
               <div className="flex items-center justify-between">
                 <button
                   disabled={levelConfig.levelNumber <= 1 || levelConfig.levelNumber > TOTAL_STORY_LEVELS}
@@ -655,7 +671,7 @@ export default function SandrasMadnessWebApp() {
             </div>
 
             {/* Companion Message Strip */}
-            <div className="w-full rounded-2xl bg-amber-50/90 dark:bg-stone-900 border border-amber-200 dark:border-stone-700 px-3.5 py-2.5 flex items-center justify-between gap-3">
+            <div className="companion-strip w-full rounded-2xl bg-amber-50/90 dark:bg-stone-900 border border-amber-200 dark:border-stone-700 px-3.5 py-2.5 flex items-center justify-between gap-3">
               <div className="text-xs">
                 <span className="font-extrabold" style={{ color: CREW_MEMBERS[activeSpeaker].badgeColor }}>
                   {CREW_MEMBERS[activeSpeaker].displayName}:{" "}
@@ -673,7 +689,7 @@ export default function SandrasMadnessWebApp() {
             </div>
 
             {/* Main Interactive Board + Overlays */}
-            <div className="relative w-full flex justify-center">
+            <div className="game-board-wrap relative w-full flex justify-center">
               <ArrowBoardCanvas
                 gridCols={levelConfig.gridCols}
                 gridRows={levelConfig.gridRows}
@@ -699,7 +715,7 @@ export default function SandrasMadnessWebApp() {
                   <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 max-w-sm w-full text-center border-2 border-sandra-terracotta shadow-2xl">
                     <div className="text-3xl mb-2">{"⭐".repeat(earnedStarsOnWin)}</div>
                     <h3 className="text-xl font-extrabold text-sandra-terracotta">
-                      BRING HOME THE JERKY!! 🥩
+                      MOMMA'S BRINGIN' HOME THE JERKY!! 🥩
                     </h3>
                     <p className="text-xs mt-1 opacity-80">
                       Cleared &apos;{levelConfig.title}&apos; with {heartsRemaining}/{maxHearts} Hearts ({earnedStarsOnWin}/3 Stars)!
@@ -798,7 +814,7 @@ export default function SandrasMadnessWebApp() {
                   }}
                   className="px-3 py-1.5 rounded-full bg-red-100 text-red-900 text-xs font-bold"
                 >
-                  🥩 Bring Home The Jerky!
+                  🥩 Momma's Bringin' Home The Jerky!
                 </button>
                 <button
                   disabled={hintsRemaining <= 0}

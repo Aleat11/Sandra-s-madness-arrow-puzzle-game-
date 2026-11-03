@@ -37,8 +37,8 @@ export const HILARIOUS_SOUNDS: HilariousSoundMeta[] = [
     wavFile: "/sounds/scream.wav"
   },
   {
-    id: "BRING_HOME_THE_JERKY",
-    comicText: "🥩 BRING HOME THE JERKY!!",
+    id: "MOMMAS_BRINGIN_HOME_THE_JERKY",
+    comicText: "🥩 MOMMA'S BRINGIN' HOME THE JERKY!!",
     badgeColor: "#E53935",
     wavFile: "/sounds/jerky_fanfare.wav"
   }
@@ -91,7 +91,9 @@ class SoundEffectsController {
   private ensureContext(): AudioContext | null {
     if (typeof window === "undefined") return null;
     if (!this.audioCtx) {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioCtx) this.audioCtx = new AudioCtx();
     }
     if (this.audioCtx && this.audioCtx.state === "suspended") {
@@ -112,7 +114,7 @@ class SoundEffectsController {
       const freq = track.notes[this.noteIndex % track.notes.length];
       this.noteIndex++;
 
-      // Periodically auto-switch song every 28 notes!
+      // Periodically auto-switch song every 28 notes
       if (this.noteIndex > 0 && this.noteIndex % 28 === 0) {
         this.switchToNextSong();
       }
@@ -147,7 +149,7 @@ class SoundEffectsController {
     this.ensureContext();
     let chosen: HilariousSoundMeta;
     if (combo > 0 && combo % 4 === 0) {
-      chosen = HILARIOUS_SOUNDS[5]; // BRING_HOME_THE_JERKY
+      chosen = HILARIOUS_SOUNDS[5]; // MOMMAS_BRINGIN_HOME_THE_JERKY
     } else {
       chosen = HILARIOUS_SOUNDS[this.cycleIndex % HILARIOUS_SOUNDS.length];
       this.cycleIndex++;
@@ -155,44 +157,133 @@ class SoundEffectsController {
 
     if (!this.sfxEnabled) return chosen;
 
-    // Play bundled .wav asset and/or Web Audio synthesis
+    // Play crisp synthesized bowstring arrow twang
+    this.playArrowLaunchTwang();
+
+    // Play bundled .wav asset if available
     if (typeof Audio !== "undefined") {
       const audio = new Audio(chosen.wavFile);
       audio.volume = 0.55;
       audio.play().catch(() => {});
     }
 
-    if (chosen.id === "BRING_HOME_THE_JERKY") {
-      this.speakBringHomeTheJerky();
+    if (chosen.id === "MOMMAS_BRINGIN_HOME_THE_JERKY") {
+      this.speakMommasBringinHomeTheJerky();
     }
     return chosen;
   }
 
-  public speakBringHomeTheJerky(): HilariousSoundMeta {
+  /**
+   * Bowstring twang + wind whoosh for crisp arrow launches
+   */
+  public playArrowLaunchTwang() {
+    if (!this.sfxEnabled) return;
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+
+    try {
+      // Snappy bow twang (pitch glide downwards)
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(680, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.18);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.18);
+
+      // Whimsical harmonic ring
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = "sine";
+      osc2.frequency.setValueAtTime(1040, ctx.currentTime);
+      osc2.frequency.exponentialRampToValueAtTime(520, ctx.currentTime + 0.12);
+      gain2.gain.setValueAtTime(0.09, ctx.currentTime);
+      gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start();
+      osc2.stop(ctx.currentTime + 0.12);
+    } catch {}
+  }
+
+  public speakMommasBringinHomeTheJerky(): HilariousSoundMeta {
     this.ensureContext();
     const meta = HILARIOUS_SOUNDS[5];
     if (!this.sfxEnabled) return meta;
 
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance("Bring home the jerky!");
-      utter.pitch = 1.18;
-      utter.rate = 1.08;
-      window.speechSynthesis.speak(utter);
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance("Momma's bringin' home the jerky!");
+        utter.pitch = 1.25;
+        utter.rate = 1.12;
+        window.speechSynthesis.speak(utter);
+      } catch {}
     }
-    this.playSynthTone(523.25, 783.99, 0.24, "triangle", 0.18);
+
+    // Celebratory brass fanfare triad (C5 - E5 - G5 - C6)
+    this.playFanfareArpeggio();
     return meta;
+  }
+
+  // Alias for backward compatibility
+  public speakBringHomeTheJerky(): HilariousSoundMeta {
+    return this.speakMommasBringinHomeTheJerky();
+  }
+
+  public playArcherQuipTone() {
+    if (!this.sfxEnabled) return;
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+
+    try {
+      // Whimsical Robin Hood style double pluck
+      const notes = [440, 554.37, 659.25];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        const start = ctx.currentTime + idx * 0.08;
+        osc.frequency.setValueAtTime(freq, start);
+        gain.gain.setValueAtTime(0.14, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(start);
+        osc.stop(start + 0.16);
+      });
+    } catch {}
   }
 
   public playBlockedBump() {
     if (!this.sfxEnabled) return;
-    this.ensureContext();
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+
     if (typeof Audio !== "undefined") {
       const audio = new Audio("/sounds/blocked.wav");
       audio.volume = 0.55;
       audio.play().catch(() => {});
     }
-    this.playSynthTone(165, 92, 0.22, "sawtooth", 0.2);
+
+    // Wooden deflection impact: sharp dual click
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.22, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch {}
   }
 
   public playVictory() {
@@ -203,7 +294,56 @@ class SoundEffectsController {
       audio.volume = 0.6;
       audio.play().catch(() => {});
     }
-    this.speakBringHomeTheJerky();
+    this.playVictoryFanfare();
+    this.speakMommasBringinHomeTheJerky();
+  }
+
+  private playFanfareArpeggio() {
+    const ctx = this.audioCtx;
+    if (!ctx) return;
+    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+    notes.forEach((freq, idx) => {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        const start = ctx.currentTime + idx * 0.07;
+        osc.frequency.setValueAtTime(freq, start);
+        gain.gain.setValueAtTime(0.18, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.28);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(start);
+        osc.stop(start + 0.29);
+      } catch {}
+    });
+  }
+
+  private playVictoryFanfare() {
+    const ctx = this.audioCtx;
+    if (!ctx) return;
+    const chords = [
+      [392.0, 493.88, 587.33], // G major
+      [440.0, 554.37, 659.25], // A major
+      [523.25, 659.25, 783.99, 1046.5] // C major triumphant
+    ];
+    chords.forEach((chord, stepIdx) => {
+      chord.forEach(freq => {
+        try {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          const start = ctx.currentTime + stepIdx * 0.14;
+          osc.frequency.setValueAtTime(freq, start);
+          gain.gain.setValueAtTime(0.12, start);
+          gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(start);
+          osc.stop(start + 0.36);
+        } catch {}
+      });
+    });
   }
 
   private playSynthTone(
@@ -215,17 +355,19 @@ class SoundEffectsController {
   ) {
     const ctx = this.audioCtx;
     if (!ctx) return;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(startFreq, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(Math.max(40, endFreq), ctx.currentTime + durationSec);
-    gain.gain.setValueAtTime(gainLevel, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durationSec);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + durationSec);
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(startFreq, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(40, endFreq), ctx.currentTime + durationSec);
+      gain.gain.setValueAtTime(gainLevel, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durationSec);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + durationSec);
+    } catch {}
   }
 }
 

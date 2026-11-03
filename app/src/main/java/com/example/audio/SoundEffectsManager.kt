@@ -28,18 +28,18 @@ enum class HilariousArrowSound(val comicText: String, val badgeColorHex: Long) {
     HORN("HONK HONK!! 📯", 0xFFEC4899),
     SWOOP("SWOOOSH!! 🚀", 0xFF0EA5E9),
     SCREAM("AAAHHH!! 😱", 0xFF8B5CF6),
-    BRING_HOME_THE_JERKY("BRING HOME THE JERKY!! 🥩", 0xFFE53935)
+    BRING_HOME_THE_JERKY("MOMMA'S BRINGIN' HOME THE JERKY!! 🥩", 0xFFE53935)
 }
 
 enum class MusicTrack(val title: String, val vibe: String) {
     CROCHET_LOFI("Cozy Crochet Cafe Lo-Fi", "Warm Rhodes Chords"),
     BURGER_BOUNCE("Sizzling Burger Diner Groove", "Upbeat Marimba Bounce"),
     BOOKWORM_WALTZ("Midnight Bookworm Music Box", "Dreamy Celestial Waltz"),
-    JERKY_POLKA("Sandra's Jerky & Bakery Jam", "Playful Arcade Melody")
+    JERKY_POLKA("Momma's Jerky & Bakery Jam", "Playful Arcade Melody")
 }
 
 /**
- * Hilarious Comedy Sound Effects Synthesizer + Android TextToSpeech ("Bring home the jerky!")
+ * Hilarious Comedy Sound Effects Synthesizer + Android TextToSpeech ("Momma's bringin' home the jerky!")
  * + Auto-Switching 4-Track Calming Music Jukebox.
  */
 class SoundEffectsManager(context: Context? = null) {
@@ -101,7 +101,7 @@ class SoundEffectsManager(context: Context? = null) {
      * [HilariousArrowSound] so the canvas can spawn a matching comic explosion callout!
      */
     fun playHilariousArrowLaunch(comboStreak: Int): HilariousArrowSound {
-        // Every 4th combo or when cycling hits index 5, Sandra shouts "Bring home the jerky!"
+        // Every 4th combo or when cycling hits index 5, Sandra shouts "Momma's bringin' home the jerky!"
         val chosen = if (comboStreak >= 3 && comboStreak % 3 == 0) {
             HilariousArrowSound.BRING_HOME_THE_JERKY
         } else {
@@ -128,14 +128,14 @@ class SoundEffectsManager(context: Context? = null) {
     }
 
     /**
-     * Explicitly triggers Sandra saying "Bring home the jerky!" via TTS + celebratory riff.
+     * Explicitly triggers Sandra saying "Momma's bringin' home the jerky!" via TTS + celebratory riff.
      */
     fun speakBringHomeTheJerky() {
         if (!sfxEnabled) return
         runCatching {
             if (isTtsReady) {
                 tts?.speak(
-                    "Bring home the jerky!",
+                    "Momma's bringin' home the jerky!",
                     TextToSpeech.QUEUE_FLUSH,
                     null,
                     "sandra_jerky_${System.currentTimeMillis()}"
@@ -301,7 +301,7 @@ class SoundEffectsManager(context: Context? = null) {
     }
 
     /**
-     * 6. Jerky Fanfare Riff accompanying Sandra's "Bring home the jerky!" voice line.
+     * 6. Jerky Fanfare Riff accompanying Sandra's "Momma's bringin' home the jerky!" voice line.
      */
     private fun playJerkyFanfare() {
         val notes = doubleArrayOf(523.25, 659.25, 783.99, 1046.50)

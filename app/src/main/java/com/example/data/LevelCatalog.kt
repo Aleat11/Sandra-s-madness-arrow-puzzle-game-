@@ -596,7 +596,7 @@ object LevelCatalog {
         LevelMeta(
             levelNumber = 16,
             title = "Grandmaster Bookmark Star (9×9)",
-            chapterName = "Ch. 4 • 10×10 Grandmaster & Bosses",
+            chapterName = "Ch. 4 • The Grey Area",
             shapeName = "9×9 Reading Star Matrix",
             accentBadge = "★★★★★ Grandmaster 9×9",
             host = CrewMember.SANDRA,
@@ -623,7 +623,7 @@ object LevelCatalog {
         LevelMeta(
             levelNumber = 17,
             title = "Brioche Crown Imperial (9×9)",
-            chapterName = "Ch. 4 • 10×10 Grandmaster & Bosses",
+            chapterName = "Ch. 4 • The Grey Area",
             shapeName = "9×9 Royal Bakery Crown",
             accentBadge = "★★★★★ Grandmaster 9×9",
             host = CrewMember.NATY,
@@ -650,7 +650,7 @@ object LevelCatalog {
         LevelMeta(
             levelNumber = 18,
             title = "Sandra, Naty & Ally's 9×9 Banquet",
-            chapterName = "Ch. 4 • 10×10 Grandmaster & Bosses",
+            chapterName = "Ch. 4 • The Grey Area",
             shapeName = "9×9 Triple-Crown Platter",
             accentBadge = "★★★★★ Grandmaster 9×9",
             host = CrewMember.ALLY,
@@ -677,7 +677,7 @@ object LevelCatalog {
         LevelMeta(
             levelNumber = 19,
             title = "Colossal 10×10 Burger & Bakery Citadel",
-            chapterName = "Ch. 4 • 10×10 Grandmaster & Bosses",
+            chapterName = "Ch. 4 • The Grey Area",
             shapeName = "10×10 Sky-High Burger Stack",
             accentBadge = "★★★★★ 10×10 Citadel",
             host = CrewMember.NATY,
@@ -705,7 +705,7 @@ object LevelCatalog {
         LevelMeta(
             levelNumber = 20,
             title = "FINAL BOSS: Messy House + Broken AC (10×10)",
-            chapterName = "Ch. 4 • 10×10 Grandmaster & Bosses",
+            chapterName = "Ch. 4 • The Grey Area",
             shapeName = "10×10 Ultimate Burger & Chore Boss",
             accentBadge = "★★★★★ 10×10 Final Boss",
             host = CrewMember.SANDRA,

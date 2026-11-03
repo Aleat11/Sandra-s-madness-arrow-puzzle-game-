@@ -165,7 +165,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             it.copy(
                 lastHilariousSound = HilariousArrowSound.BRING_HOME_THE_JERKY,
                 activeSpeaker = CrewMember.SANDRA,
-                companionMessage = "Sandra shouts: 'BRING HOME THE JERKY!!' 🥩🔥"
+                companionMessage = "Sandra shouts: 'MOMMA'S BRINGIN' HOME THE JERKY!!' 🥩🔥"
             )
         }
     }
@@ -948,13 +948,13 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         if (isWon) {
             val starStr = "⭐".repeat(starsEarned)
             return if (boss != null) {
-                CrewMember.SANDRA to "$starStr ${boss.victoryQuote} BRING HOME THE JERKY!!"
+                CrewMember.SANDRA to "$starStr ${boss.victoryQuote} MOMMA'S BRINGIN' HOME THE JERKY!!"
             } else {
-                CrewMember.SANDRA to "$starStr BRING HOME THE JERKY!! Level mastered ($starsEarned/3 Stars)!"
+                CrewMember.SANDRA to "$starStr MOMMA'S BRINGIN' HOME THE JERKY!! Level mastered ($starsEarned/3 Stars)! Bullseye!"
             }
         }
         if (hilariousSound == HilariousArrowSound.BRING_HOME_THE_JERKY) {
-            return CrewMember.SANDRA to "Sandra: 'BRING HOME THE JERKY!!' (${combo}x Combo! $remainingCount arrows left, $openingsCount clear)"
+            return CrewMember.SANDRA to "Sandra: 'MOMMA'S BRINGIN' HOME THE JERKY!!' (${combo}x Combo! $remainingCount arrows left, $openingsCount clear)"
         }
         if (boss != null && damageDealt != null) {
             return CrewMember.SANDRA to "${hilariousSound.comicText} Struck ${boss.bossName} for -$damageDealt HP! ($remainingCount left • $openingsCount clear)"
